@@ -53,7 +53,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (Object.keys(isToken).length) navigate('/app', { replace: true });
+    if (Object.keys(isToken).length) navigate('/app');
   }, [isToken]);
 
   return (
@@ -67,7 +67,10 @@ const App = () => {
               <MainScreen />
             </RequireAuth>
           }
-        />
+        >
+          <Route path={':userId'} element={<>Edit User</>} />
+          <Route path={'new'} element={<>New User</>} />
+        </Route>
       </Routes>
     </AuthContext.Provider>
   );

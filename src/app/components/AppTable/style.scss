@@ -1,3 +1,7 @@
-.table-search {
-  padding: 10px;
+.app-table {
+  
+  &__top {
+    display: flex;
+    padding: 15px 0;
+  }
 }

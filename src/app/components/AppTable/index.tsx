@@ -6,6 +6,7 @@ import {
   usePagination,
   useAsyncDebounce
 } from 'react-table';
+import { useNavigate } from "react-router-dom";
 
 import TableHeader from '../TableHeader';
 import TableBody from '../TableBody';
@@ -19,12 +20,10 @@ interface Filter {
 }
 
 const GlobalFilter = ({
-  preGlobalFilteredRows,
   globalFilter,
   setGlobalFilter,
 }: Filter) => {
   
-  const count = preGlobalFilteredRows.length
   const [value, setValue] = useState(globalFilter)
   const onChange = useAsyncDebounce(value => {
     setGlobalFilter(value || undefined)
@@ -49,11 +48,24 @@ const GlobalFilter = ({
   )
 }
 
-
 const AppTable = () => {
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
   
   const columns = useMemo(() => [
+    {
+      Header: 'Actions',
+      accessor: '[editButton]',
+      Cell: (cellObj: any) => {
+        return (
+          <div>
+            <button onClick={() => pushEditScreen(cellObj.row.original.id)}>Edit</button>
+            <br />
+            <button>Delete</button>
+          </div>
+        )
+      }
+    },
     {
       Header: 'First Name',
       accessor: 'first_name',
@@ -85,6 +97,14 @@ const AppTable = () => {
       width: '100%'
     },
   ], []);
+
+  const pushEditScreen = (userId: any) => {
+    navigate(`${userId}`);
+  };
+
+  const pushNewUserScreen = () => {
+    navigate('new');
+  }
 
   const getUsersData = () => {
     return fetch('./mock/users.json', {
@@ -140,11 +160,14 @@ const AppTable = () => {
 
   return (
     <div className="app-table">
-      <GlobalFilter
-        preGlobalFilteredRows={preGlobalFilteredRows}
-        globalFilter={state.globalFilter}
-        setGlobalFilter={setGlobalFilter}
-      />
+      <div className="app-table__top">
+        <GlobalFilter
+          preGlobalFilteredRows={preGlobalFilteredRows}
+          globalFilter={state.globalFilter}
+          setGlobalFilter={setGlobalFilter}
+        />
+        <button onClick={pushNewUserScreen}>Add New User</button>
+      </div>
       <TableHeader
         getTableProps={getTableProps}
         headerGroups={headerGroups}
