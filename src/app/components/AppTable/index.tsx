@@ -31,7 +31,7 @@ const GlobalFilter = ({
   }, 200)
 
   return (
-    <span>
+    <div className="table-search">
       Search:{' '}
       <input
         value={value || ""}
@@ -39,13 +39,13 @@ const GlobalFilter = ({
           setValue(e.target.value);
           onChange(e.target.value);
         }}
-        placeholder={`${count} records...`}
+        placeholder={'type to search...'}
         style={{
           fontSize: '1.1rem',
           border: '0',
         }}
       />
-    </span>
+    </div>
   )
 }
 
