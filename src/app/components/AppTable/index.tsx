@@ -3,16 +3,55 @@ import {
   useTable,
   useFilters,
   useGlobalFilter,
-  usePagination
+  usePagination,
+  useAsyncDebounce
 } from 'react-table';
 
 import TableHeader from '../TableHeader';
 import TableBody from '../TableBody';
 import './style.scss';
 
+interface Filter {
+  preGlobalFilteredRows: any,
+  globalFilter: any,
+  setGlobalFilter: any
+}
+
+const GlobalFilter = ({
+  preGlobalFilteredRows,
+  globalFilter,
+  setGlobalFilter,
+}: Filter) => {
+  
+  const count = preGlobalFilteredRows.length
+  const [value, setValue] = useState(globalFilter)
+  const onChange = useAsyncDebounce(value => {
+    setGlobalFilter(value || undefined)
+  }, 200)
+
+  return (
+    <span>
+      Search:{' '}
+      <input
+        value={value || ""}
+        onChange={e => {
+          setValue(e.target.value);
+          onChange(e.target.value);
+        }}
+        placeholder={`${count} records...`}
+        style={{
+          fontSize: '1.1rem',
+          border: '0',
+        }}
+      />
+    </span>
+  )
+}
+
+
 const AppTable = () => {
   const [data, setData] = useState([]);
-
+  
   const columns = useMemo(() => [
     {
       Header: 'First Name',
@@ -66,7 +105,6 @@ const AppTable = () => {
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    rows,
     page,
     canPreviousPage,
     canNextPage,
@@ -76,6 +114,9 @@ const AppTable = () => {
     nextPage,
     previousPage,
     setPageSize,
+    state,
+    preGlobalFilteredRows,
+    setGlobalFilter,
     state: { pageIndex, pageSize },
   } = useTable(
     {
@@ -85,7 +126,7 @@ const AppTable = () => {
     useFilters,
     useGlobalFilter,
     usePagination
-  )
+  );
 
   useEffect(() => {
     if (!data.length) {
@@ -98,6 +139,11 @@ const AppTable = () => {
 
   return (
     <div className="app-table">
+      <GlobalFilter
+        preGlobalFilteredRows={preGlobalFilteredRows}
+        globalFilter={state.globalFilter}
+        setGlobalFilter={setGlobalFilter}
+      />
       <TableHeader
         getTableProps={getTableProps}
         headerGroups={headerGroups}
