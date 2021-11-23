@@ -6,7 +6,7 @@ import {
   usePagination,
   useAsyncDebounce
 } from 'react-table';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import TableHeader from '../TableHeader';
 import TableBody from '../TableBody';
@@ -51,6 +51,7 @@ const GlobalFilter = ({
 const AppTable = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation()
   
   const columns = useMemo(() => [
     {
@@ -127,7 +128,8 @@ const AppTable = () => {
   );
 
   const pushEditScreen = (userId: any) => {
-    navigate(`${userId}`);
+    const user = data.filter((el: any) => el.id === userId)
+    navigate(`${userId}`, { state: { user: user[0] } });
   };
 
   const pushNewUserScreen = () => {
@@ -156,7 +158,7 @@ const AppTable = () => {
   }
 
   useEffect(() => {
-    if (!data.length) {
+    if (!data.length && location.pathname === '/app') {
       getUsersData();
     }
     return () => {
@@ -172,7 +174,7 @@ const AppTable = () => {
           globalFilter={state.globalFilter}
           setGlobalFilter={setGlobalFilter}
         />
-        <button onClick={pushNewUserScreen}>Add New User</button>
+        <button onClick={pushNewUserScreen}>Create New User</button>
       </div>
       <TableHeader
         getTableProps={getTableProps}

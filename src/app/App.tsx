@@ -18,7 +18,8 @@ import {
 } from 'app/store';
 import {
   LoginScreen,
-  MainScreen
+  MainScreen,
+  EditScreen
 } from 'app/screens';
 
 const App = () => {
@@ -68,7 +69,7 @@ const App = () => {
             </RequireAuth>
           }
         >
-          <Route path={':userId'} element={<>Edit User</>} />
+          <Route path={':userId'} element={<EditScreen />} />
           <Route path={'new'} element={<>New User</>} />
         </Route>
       </Routes>
