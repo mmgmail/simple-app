@@ -5,13 +5,17 @@
   display: block;
 
   &__label {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     display: block;
     padding: 5px 0;
-    color: $navy;
+    color: $grey;
   }
 
   &__input {
     border: 1px solid $grey;
+    height: 45px;
+    display: block;
+    width: 100%;
+    padding: 15px;
   }
 }

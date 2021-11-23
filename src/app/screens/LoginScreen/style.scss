@@ -1,3 +1,45 @@
+@import 'app/assets/styles/scss/colors.scss';
+
 .login-screen {
-  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
+  &__form {
+    max-width: 450px;
+    width: 100%;
+    box-shadow: 1px 1px 15px 2px rgba(200, 200, 200, 0.4);
+    padding: 40px 20px;
+
+    &_inner {
+      padding: 20px;
+    }
+
+    &_title {
+      text-align: center;
+      color: $navy;
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    &_row {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    &_submit {
+      display: block;
+      text-align: center;
+      background-color: $navy;
+      color: $white;
+      font-size: 1.2rem;
+      font-weight: 600;
+      width: 100%;
+      border: none;
+      height: 45px;
+      margin-top: 40px;
+    }
+  }
 }
