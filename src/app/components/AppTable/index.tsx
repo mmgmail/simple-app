@@ -15,26 +15,32 @@ const AppTable = () => {
     {
       Header: 'First Name',
       accessor: 'first_name',
+      width: '100%'
     },
     {
       Header: 'Last Name',
       accessor: 'last_name',
+      width: '100%'
     },
     {
       Header: 'Email',
       accessor: 'email',
+      width: '100%'
     },
     {
       Header: 'Gender',
       accessor: 'gender',
+      width: '100%'
     },
     {
       Header: 'City',
       accessor: 'city',
+      width: '100%'
     },
     {
       Header: 'Company Name',
       accessor: 'company_name',
+      width: '100%'
     },
   ], []);
 
@@ -75,7 +81,7 @@ const AppTable = () => {
       getUsersData();
     }
     return () => {
-      setData([]); // This worked for me
+      setData([]);
     };
   }, []);
 

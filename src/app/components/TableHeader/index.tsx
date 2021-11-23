@@ -14,11 +14,23 @@ const TableHeader = ({
       className="table-header"
       {...getTableProps}
     >
-      <div>
+      <div className="table-header__head">
         {headerGroups.map((headerGroup: any) => (
-          <div {...headerGroup.getHeaderGroupProps()}>
+          <div
+            className="table-header__head_row"
+            {...headerGroup.getHeaderGroupProps()}
+          >
             {headerGroup.headers.map((column: any) => (
-              <div {...column.getHeaderProps()}>
+              <div
+                className="table-header__head_cell"
+                {...column.getHeaderProps({
+                  style: {
+                    minWidth: column.minWidth,
+                    maxWidth: column.maxWidth,
+                    width: column.width,
+                  }
+                })}
+              >
                 {column.render('Header')}
               </div>
             ))}

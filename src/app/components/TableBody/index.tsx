@@ -18,13 +18,27 @@ const TableBody = ({
       className="table-body"
       {...getTableProps}
     >
-      <div {...getTableBodyProps()}>
+      <div
+        className="table-body__inner"
+        {...getTableBodyProps()}>
         {firstPageRows.map((row: any) => {
           prepareRow(row)
           return (
-            <div {...row.getRowProps()}>
+            <div
+              className="table-body__inner_row"
+              {...row.getRowProps()}
+            >
               {row.cells.map((cell: any) => {
-                return <div {...cell.getCellProps()}>{cell.render('Cell')}</div>
+                return <div
+                  className="table-body__inner_cell"
+                  {...cell.getCellProps({
+                    style: {
+                      minWidth: cell.column.minWidth,
+                      maxWidth: cell.column.maxWidth,
+                      width: cell.column.width,
+                    },
+                  })}
+                >{cell.render('Cell')}</div>
               })}
             </div>
           )
