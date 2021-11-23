@@ -3,14 +3,14 @@ import './style.scss';
  interface Props {
   getTableProps: any,
   getTableBodyProps: any,
-  firstPageRows: any,
-  prepareRow: any
+  prepareRow: any,
+  page: any
  }
 
 const TableBody = ({
   getTableProps,
   getTableBodyProps,
-  firstPageRows,
+  page,
   prepareRow
 }: Props) => {
   return (
@@ -21,7 +21,7 @@ const TableBody = ({
       <div
         className="table-body__inner"
         {...getTableBodyProps()}>
-        {firstPageRows.map((row: any) => {
+        {page.map((row: any) => {
           prepareRow(row)
           return (
             <div
