@@ -1,0 +1,12 @@
+@import 'app/assets/styles/scss/colors.scss';
+
+.app-header {
+  color: $navy;
+  font-size: 2rem;
+  font-weight: bold;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  padding: 0 25px;
+  box-shadow: 0 5px 10px 8px rgba(200,200,200,0.1);
+}
