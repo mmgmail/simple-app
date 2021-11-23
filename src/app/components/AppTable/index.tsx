@@ -61,7 +61,7 @@ const AppTable = () => {
           <div>
             <button onClick={() => pushEditScreen(cellObj.row.original.id)}>Edit</button>
             <br />
-            <button>Delete</button>
+            <button onClick={() => deleteUser(cellObj.row.original.id)}>Delete</button>
           </div>
         )
       }
@@ -98,29 +98,6 @@ const AppTable = () => {
     },
   ], []);
 
-  const pushEditScreen = (userId: any) => {
-    navigate(`${userId}`);
-  };
-
-  const pushNewUserScreen = () => {
-    navigate('new');
-  }
-
-  const getUsersData = () => {
-    return fetch('./mock/users.json', {
-      headers : { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
-    }).then(res => res.json())
-      .then(jsonData => {
-        setData(jsonData);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
   const {
     getTableProps,
     getTableBodyProps,
@@ -149,6 +126,38 @@ const AppTable = () => {
     usePagination
   );
 
+  const pushEditScreen = (userId: any) => {
+    navigate(`${userId}`);
+  };
+
+  const pushNewUserScreen = () => {
+    navigate('new');
+  }
+
+  const deleteUser = (id: any) => {
+    const users = data;
+    const index = users.findIndex((el: any) => el.id === id);
+    if (index !== -1) {
+      users.splice(index, 1);
+      setData(users);
+    }
+  }
+
+  function getUsersData() {
+    fetch('./mock/users.json', {
+      headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    }).then(res => res.json())
+      .then(jsonData => {
+        setData(jsonData);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
   useEffect(() => {
     if (!data.length) {
       getUsersData();
@@ -172,27 +181,25 @@ const AppTable = () => {
         getTableProps={getTableProps}
         headerGroups={headerGroups}
       />
-      {data.length ? 
-      <>
-        <TableBody
-          getTableProps={getTableProps}
-          getTableBodyProps={getTableBodyProps}
-          page={page}
-          prepareRow={prepareRow}
-        /> 
-        <TablePagination
-          gotoPage={gotoPage}
-          canPreviousPage={canPreviousPage}
-          previousPage={previousPage}
-          nextPage={nextPage}
-          pageCount={pageCount}
-          canNextPage={canNextPage}
-          pageIndex={pageIndex}
-          pageOptions={pageOptions}
-          pageSize={pageSize}
-          setPageSize={setPageSize}
-        />
-      </> : <>Loading ...</>}
+      <TableBody
+        getTableProps={getTableProps}
+        getTableBodyProps={getTableBodyProps}
+        page={page}
+        prepareRow={prepareRow}
+        data={data}
+      /> 
+      <TablePagination
+        gotoPage={gotoPage}
+        canPreviousPage={canPreviousPage}
+        previousPage={previousPage}
+        nextPage={nextPage}
+        pageCount={pageCount}
+        canNextPage={canNextPage}
+        pageIndex={pageIndex}
+        pageOptions={pageOptions}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
+      />
     </div>
   )
 }

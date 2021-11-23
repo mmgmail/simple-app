@@ -4,17 +4,19 @@ import './style.scss';
   getTableProps: any,
   getTableBodyProps: any,
   prepareRow: any,
-  page: any
+  page: any,
+  data: any
  }
 
 const TableBody = ({
   getTableProps,
   getTableBodyProps,
   page,
-  prepareRow
+  prepareRow,
+  data
 }: Props) => {
   return (
-    <div
+    data.length ? <div
       className="table-body"
       {...getTableProps}
     >
@@ -44,7 +46,7 @@ const TableBody = ({
           )
         })}
       </div>
-    </div>
+    </div> : <>Loading ...</>
   )
 }
 

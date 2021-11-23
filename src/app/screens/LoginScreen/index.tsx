@@ -50,7 +50,7 @@ const LoginScreen = () => {
         }
       });
       setTimeout(() => {
-        navigate('/app', { replace: true });
+        navigate('/app');
       }, 10);
     }
  }, [submit]);
