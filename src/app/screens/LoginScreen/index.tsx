@@ -50,8 +50,8 @@ const LoginScreen = () => {
         }
       });
       setTimeout(() => {
-        navigate('/', { replace: true });
-      }, 1000);
+        navigate('/app', { replace: true });
+      }, 10);
     }
  }, [submit]);
 

@@ -1,30 +1,43 @@
-import { useReducer, useLayoutEffect, useState } from "react";
-import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
+import {
+  useReducer,
+  useEffect,
+  useLayoutEffect,
+  useState
+} from "react";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+  useNavigate
+} from "react-router-dom";
 
 import {
   userReducer,
   initialState,
   AuthContext
-} from './store';
+} from 'app/store';
 import {
   LoginScreen,
   MainScreen
-} from './screens';
-
-function RequireAuth({ auth, children }: { auth: number, children: JSX.Element }) {
-  let location = useLocation();
-  if (!auth) {
-    return <Navigate to="/login" state={{ from: location }} />;
-  }
-  return children;
-}
+} from 'app/screens';
 
 const App = () => {
   const [state, dispatch] = useReducer(userReducer, initialState);
   const [isToken, setIsToken] = useState({});
   let navigate = useNavigate();
 
-  useLayoutEffect(() => {
+  const RequireAuth = ({ children }: { children: JSX.Element }) => {
+    let location = useLocation();
+    const token = (JSON.parse(localStorage.getItem('token') || '{}'));
+    
+    if (!Object.keys(token).length) {
+      return <Navigate to="/login" state={{ from: location }} />;
+    }
+    return children;
+  }
+
+  useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const token = (JSON.parse(localStorage.getItem('token') || '{}'));
     setIsToken(token);
@@ -40,18 +53,18 @@ const App = () => {
     }
   }, []);
 
-  useLayoutEffect(() => {
-    if (Object.keys(isToken).length) navigate('/');
-  }, [isToken]);
+  useEffect(() => {
+    if (Object.keys(isToken).length) navigate('/app', { replace: true });
+  }, [isToken, navigate]);
 
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
       <Routes>
         <Route path="/login" element={<LoginScreen />} />
         <Route
-          path="/"
+          path="/app"
           element={
-            <RequireAuth auth={Object.keys(isToken).length}>
+            <RequireAuth>
               <MainScreen />
             </RequireAuth>
           }
