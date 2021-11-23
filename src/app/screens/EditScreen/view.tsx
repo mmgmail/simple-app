@@ -3,10 +3,11 @@ import { InputField } from 'app/components';
 import './style.scss';
 
 interface Props {
-  data: any
+  data: any,
+  onInputChange: (event: any) => void;
 }
 
-const ContainerView = ({ data }: Props) => {
+const ContainerView = ({ data, onInputChange }: Props) => {
   return (
     <div className="edit-screen">
       <InputField
@@ -14,7 +15,7 @@ const ContainerView = ({ data }: Props) => {
         type="text"
         label={'First Name'}
         value={data.first_name}
-        onChange={() => {}}
+        onChange={onInputChange}
         required
       />
       <InputField
@@ -22,7 +23,7 @@ const ContainerView = ({ data }: Props) => {
         type="text"
         label={'Last Name'}
         value={data.last_name}
-        onChange={() => {}}
+        onChange={onInputChange}
         required
       />
       <InputField
@@ -30,7 +31,7 @@ const ContainerView = ({ data }: Props) => {
         type="email"
         label={'Email'}
         value={data.email}
-        onChange={() => {}}
+        onChange={onInputChange}
         required
       />
       <InputField
@@ -38,7 +39,7 @@ const ContainerView = ({ data }: Props) => {
         type="text"
         label={'Company Name'}
         value={data.company_name}
-        onChange={() => {}}
+        onChange={onInputChange}
         required
       />
       <InputField
@@ -46,7 +47,7 @@ const ContainerView = ({ data }: Props) => {
         type="text"
         label={'Gender'}
         value={data.gender}
-        onChange={() => {}}
+        onChange={onInputChange}
         required
       />
       <InputField
@@ -54,7 +55,7 @@ const ContainerView = ({ data }: Props) => {
         type="text"
         label={'City'}
         value={data.city}
-        onChange={() => {}}
+        onChange={onInputChange}
         required
       />
     </div>
