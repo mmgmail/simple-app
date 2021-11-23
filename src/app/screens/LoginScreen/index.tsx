@@ -1,16 +1,21 @@
-import { useContext, useState, useEffect } from 'react';
+import {
+  useContext,
+  useState,
+  useEffect
+} from 'react';
+import { useNavigate } from "react-router-dom";
 
-import { AuthContext } from "../../store";
-
+import { AuthContext } from 'app/store';
 import ContainerView from './view';
 
 const LoginScreen = () => {
-  const { dispatch } = useContext(AuthContext);
-
   interface UILogin {
     email: string,
     password: string
   }
+
+  const { dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
   
   const initialState = {
     email: '',
@@ -33,7 +38,7 @@ const LoginScreen = () => {
   };
 
   useEffect(() => {
-    if (data.email.length && data.password.length) {
+    if (submit && data.email.length && data.password.length) {
       dispatch({
         type: 'LOGIN',
         payload: {
@@ -43,7 +48,10 @@ const LoginScreen = () => {
           },
           token: 'jwt token'
         }
-      })
+      });
+      setTimeout(() => {
+        navigate('/', { replace: true });
+      }, 1000);
     }
  }, [submit]);
 

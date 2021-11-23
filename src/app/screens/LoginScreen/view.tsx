@@ -1,11 +1,10 @@
-import React from 'react';
-
+import { InputField } from 'app/components';
 import './style.scss';
 
 type Props = {
   data: any;
-  onSubmit: any;
-  onInputChange: any;
+  onSubmit: any,
+  onInputChange: (event: any) => void;
 };
 
 const ContainerView = ({
@@ -16,7 +15,15 @@ const ContainerView = ({
   return (
     <div className="login-screen">
       <form onSubmit={onSubmit}>
-        <label>
+        <InputField
+          name="email"
+          type="email"
+          label={'Email Address'}
+          value={data.email}
+          onChange={onInputChange}
+          required
+        />
+        {/* <label>
           Email Address
           <input
             name="email"
@@ -25,7 +32,7 @@ const ContainerView = ({
             onChange={onInputChange}
             required
           />
-        </label>
+        </label> */}
         <label htmlFor="password">
           Password
           <input

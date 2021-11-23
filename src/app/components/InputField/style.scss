@@ -1,0 +1,17 @@
+@import 'app/assets/styles/scss/colors.scss';
+
+.input-field {
+  width: 100%;
+  display: block;
+
+  &__label {
+    font-size: 0.9rem;
+    display: block;
+    padding: 5px 0;
+    color: $navy;
+  }
+
+  &__input {
+    border: 1px solid $grey;
+  }
+}
