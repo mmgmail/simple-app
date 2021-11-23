@@ -61,7 +61,7 @@ const AppTable = () => {
           <div>
             <button onClick={() => pushEditScreen(cellObj.row.original.id)}>Edit</button>
             <br />
-            <button onClick={() => deleteUser(cellObj.row.original.id)}>Delete</button>
+            <button onClick={() => deleteUser(cellObj.row.index)}>Delete</button>
           </div>
         )
       }
@@ -96,7 +96,7 @@ const AppTable = () => {
       accessor: 'company_name',
       width: '100%'
     },
-  ], []);
+  ], [data]);
 
   const {
     getTableProps,
@@ -135,12 +135,9 @@ const AppTable = () => {
   }
 
   const deleteUser = (id: any) => {
-    const users = data;
-    const index = users.findIndex((el: any) => el.id === id);
-    if (index !== -1) {
-      users.splice(index, 1);
-      setData(users);
-    }
+    const dataCopy = [...data];
+    dataCopy.splice(id, 1);
+    setData(dataCopy);
   }
 
   function getUsersData() {
