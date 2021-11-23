@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import {
   useTable,
   useFilters,
@@ -11,7 +11,7 @@ import TableBody from '../TableBody';
 const AppTable = () => {
   const [data, setData] = useState([]);
 
-  const columns = [
+  const columns = useMemo(() => [
     {
       Header: 'First Name',
       accessor: 'first_name',
@@ -36,12 +36,28 @@ const AppTable = () => {
       Header: 'Company Name',
       accessor: 'company_name',
     },
-  ];
+  ], []);
+
+  const getUsersData = () => {
+    return fetch('./mock/users.json', {
+      headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    }).then(res => res.json())
+      .then(jsonData => {
+        setData(jsonData);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
+    prepareRow,
     rows,
   } = useTable(
     {
@@ -55,10 +71,13 @@ const AppTable = () => {
   const firstPageRows = rows.slice(0, 10);
 
   useEffect(() => {
-    fetch('../../assets/mock/users.json')
-      .then(response => response.json())
-      .then((json) => setData(json))
- }, []);
+    if (!data.length) {
+      getUsersData();
+    }
+    return () => {
+      setData([]); // This worked for me
+    };
+  }, []);
 
   return (
     <div className="app-table">
@@ -66,12 +85,13 @@ const AppTable = () => {
         getTableProps={getTableProps}
         headerGroups={headerGroups}
       />
-      <TableBody
-        getTableProps={getTableProps}
-        getTableBodyProps={getTableBodyProps}
-        firstPageRows={firstPageRows}
-        prepareRow={firstPageRows}
-      />
+      {data.length ? 
+        <TableBody
+          getTableProps={getTableProps}
+          getTableBodyProps={getTableBodyProps}
+          firstPageRows={firstPageRows}
+          prepareRow={prepareRow}
+        /> : <>Loading ...</>}
     </div>
   )
 }

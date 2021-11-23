@@ -24,7 +24,7 @@ const TableBody = ({
           return (
             <div {...row.getRowProps()}>
               {row.cells.map((cell: any) => {
-                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                return <div {...cell.getCellProps()}>{cell.render('Cell')}</div>
               })}
             </div>
           )

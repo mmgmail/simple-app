@@ -18,9 +18,8 @@ const TableHeader = ({
         {headerGroups.map((headerGroup: any) => (
           <div {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column: any) => (
-              <div {...column.gediveaderProps()}>
+              <div {...column.getHeaderProps()}>
                 {column.render('Header')}
-                <div>{column.canFilter ? column.render('Filter') : null}</div>
               </div>
             ))}
           </div>

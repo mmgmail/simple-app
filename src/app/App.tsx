@@ -54,7 +54,7 @@ const App = () => {
 
   useEffect(() => {
     if (Object.keys(isToken).length) navigate('/app', { replace: true });
-  }, [isToken, navigate]);
+  }, [isToken]);
 
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
