@@ -1,16 +1,16 @@
 import './style.scss';
 
 interface Props {
-  gotoPage: any;
-  canPreviousPage: any;
-  previousPage: any;
-  nextPage: any;
-  pageCount: any;
-  canNextPage: any;
-  pageIndex: any;
+  gotoPage: (num: number) => void;
+  canPreviousPage: boolean;
+  previousPage: () => void;
+  nextPage: () => void;
+  pageCount: number;
+  canNextPage: boolean;
+  pageIndex: number;
   pageOptions: any;
   pageSize: any;
-  setPageSize: any;
+  setPageSize: (num: number) => void;
 }
 
 const TablePagination = ({

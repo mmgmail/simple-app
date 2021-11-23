@@ -136,7 +136,7 @@ const AppTable = () => {
     navigate('new');
   }
 
-  const deleteUser = (id: any) => {
+  const deleteUser = (id: number) => {
     const dataCopy = [...data];
     dataCopy.splice(id, 1);
     setData(dataCopy);
